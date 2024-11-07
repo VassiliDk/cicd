@@ -33,3 +33,29 @@ jobs:
     - name: Test vassApp
       if: ${{ github.event.inputs.run-test == 'true' || github.event_name == 'pull_request' }}
       run: npm test
+
+  runner-job:
+    # You must use a Linux environment when using service containers or container jobs
+    runs-on: ubuntu-latest
+
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: cicd_password
+          POSTGRES_DB: cicd_database
+          POSTGRES_USER: cicd_user
+
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
