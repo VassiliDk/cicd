@@ -31,5 +31,5 @@ jobs:
       run: npm run build
       
     - name: Test vassApp
-      if: ${{ github.event.inputs.run-test == 'true' || github.event_name == 'pull_request' }}
+      if: ${{ github.event.inputs.run-test == 'true' || github.event_name == 'pull-request' }}
       run: npm test
