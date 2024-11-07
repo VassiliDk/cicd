@@ -7,9 +7,6 @@ on:
         description: 'Run tests'
         required: true
         default: "false"
-  pull_request:
-      types: [ opened, synchronize, reopened ]
-      description: 'run PR checks'
 
 jobs:
   install:
@@ -31,5 +28,5 @@ jobs:
       run: npm run build
       
     - name: Test vassApp
-      if: ${{ github.event.inputs.run-test == 'true' || github.event_name == 'pull_request' }}
+      if: ${{ github.event.inputs.run-test == 'true' }}
       run: npm test
