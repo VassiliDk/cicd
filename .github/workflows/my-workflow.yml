@@ -21,3 +21,6 @@ jobs:
 
     - name: Build vassApp
       run: npm run build
+      
+    - name: Test vassApp
+      run: npm test
