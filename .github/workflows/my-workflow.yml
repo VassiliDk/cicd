@@ -15,32 +15,7 @@ jobs:
   install:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: "16"
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build vassApp
-      run: npm run build
-
-    - name: Test vassApp
-      if: ${{ github.event.inputs.run-test == 'true' || github.event_name == 'pull_request' }}
-      run: npm test
-
-  runner-job:
-    # You must use a Linux environment when using service containers or container jobs
-    runs-on: ubuntu-latest
-
-    # Service containers to run with `runner-job`
     services:
-      # Label used to access the service container
       postgres:
         # Docker Hub image
         image: postgres
@@ -59,3 +34,22 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "16"
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build vassApp
+      run: npm run build
+
+    - name: Test vassApp
+      if: ${{ github.event.inputs.run-test == 'true' || github.event_name == 'pull_request' }}
+      run: npm test
