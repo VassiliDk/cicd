@@ -29,5 +29,5 @@ jobs:
       run: npm run build
       
     - name: Test vassApp
-      if: ${{ github.event.inputs.run-test }}
+      if: ${{ github.event.inputs.run-test == 'true' }}
       run: npm test
